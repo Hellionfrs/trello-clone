@@ -1,10 +1,9 @@
-import { BoardD } from "@/actions/create-board";
 import { db } from "@/lib/db";
-import { Board } from "./board";
+import { Board, BoardProps } from "./board";
 import { Form } from "./form";
 
 const OrganizationIdPage = async () => {
-  const boards: BoardD[] = await db.board.findMany();
+  const boards = await db.board.findMany() as BoardProps[];
   return (
     <div className="flex flex-col space-y-4">
       <Form />
