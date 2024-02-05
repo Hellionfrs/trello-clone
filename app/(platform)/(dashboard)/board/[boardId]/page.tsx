@@ -33,13 +33,11 @@ const BoardIdPage = async ({ params }: BoardIdPageProps) => {
       order: "asc",
     },
   });
-  return <div className="p-4 h-full overflow-x-auto">
-    <ListContainer
-    boardId={params.boardId}
-    data={lists}>
-
-    </ListContainer>
-    </div>;
+  return (
+    <div className="p-4 h-full overflow-x-auto">
+      <ListContainer boardId={params.boardId} data={lists}></ListContainer>
+    </div>
+  );
 };
 
 export default BoardIdPage;

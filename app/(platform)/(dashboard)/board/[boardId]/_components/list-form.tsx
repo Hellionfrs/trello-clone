@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 export const ListForm = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const params = useParams();
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
@@ -36,11 +36,11 @@ export const ListForm = () => {
     onSuccess: (data) => {
       toast.success(`List "${data.title}" created`);
       disableEditing();
-      router.refresh()
+      // router.refresh()
     },
     onError: (error) => {
-      toast.error(error)
-    }
+      toast.error(error);
+    },
   });
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -51,14 +51,14 @@ export const ListForm = () => {
   useOnClickOutside(formRef, disableEditing);
 
   const onSubmit = (formData: FormData) => {
-    const title = formData.get("title") as string
-    const boardId = formData.get("boardId") as string
-    
+    const title = formData.get("title") as string;
+    const boardId = formData.get("boardId") as string;
+
     execute({
       title,
-      boardId
-    })
-  }
+      boardId,
+    });
+  };
 
   if (isEditing) {
     return (
