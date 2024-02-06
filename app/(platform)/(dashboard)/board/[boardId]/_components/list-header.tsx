@@ -11,12 +11,11 @@ import { FormInput } from "@/components/form/form-input";
 import { ListOptions } from "./list-options";
 
 interface ListHeaderProps {
+  onAddCard: () => void;
   data: List;
-};
+}
 
-export const ListHeader = ({
-  data,
-}: ListHeaderProps) => {
+export const ListHeader = ({ onAddCard, data }: ListHeaderProps) => {
   const [title, setTitle] = useState(data.title);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -43,7 +42,7 @@ export const ListHeader = ({
     },
     onError: (error) => {
       toast.error(error);
-    }
+    },
   });
 
   const handleSubmit = (formData: FormData) => {
@@ -60,11 +59,11 @@ export const ListHeader = ({
       id,
       boardId,
     });
-  }
+  };
 
   const onBlur = () => {
     formRef.current?.requestSubmit();
-  }
+  };
 
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -77,13 +76,15 @@ export const ListHeader = ({
   return (
     <div className="pt-2 px-2 text-sm font-semibold flex justify-between items-start- gap-x-2">
       {isEditing ? (
-        <form 
-          ref={formRef}
-          action={handleSubmit}  
-          className="flex-1 px-[2px]"
-        >
-          <input hidden id="id" name="id" value={data.id} readOnly/>
-          <input hidden id="boardId" name="boardId" value={data.boardId} readOnly/>
+        <form ref={formRef} action={handleSubmit} className="flex-1 px-[2px]">
+          <input hidden id="id" name="id" value={data.id} readOnly />
+          <input
+            hidden
+            id="boardId"
+            name="boardId"
+            value={data.boardId}
+            readOnly
+          />
           <FormInput
             ref={inputRef}
             onBlur={onBlur}
@@ -102,10 +103,7 @@ export const ListHeader = ({
           {title}
         </div>
       )}
-      <ListOptions
-        onAddCard={() => {}}
-        data={data}
-      />
+      <ListOptions onAddCard={onAddCard} data={data} />
     </div>
   );
 };

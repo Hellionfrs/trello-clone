@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs";
 import { notFound, redirect } from "next/navigation";
 import { BoardNavbar } from "./_components/board-navbar";
 
+// TODO: reutilizar el auth()
 export async function generateMetadata({
   params,
 }: {

@@ -8,7 +8,7 @@ interface BoardIdPageProps {
     boardId: string;
   };
 }
-
+// agaun auth()
 const BoardIdPage = async ({ params }: BoardIdPageProps) => {
   const { orgId } = auth();
   if (!orgId) {
