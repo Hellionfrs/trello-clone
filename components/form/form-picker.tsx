@@ -89,6 +89,8 @@ export const FormPicker = ({ id, errors }: FormPickerProps) => {
               alt="Unsplash image"
               className="object-cover rounded-sm"
               fill
+              // Better performance specifying sizes!
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             {selectedImageId === image.id && (
               <div className="absolute inset-y-0 h-full w-full bg-black/30 flex items-center justify-center">

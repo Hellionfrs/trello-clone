@@ -37,8 +37,8 @@ export const ListHeader = ({ onAddCard, data }: ListHeaderProps) => {
   const { execute } = useAction(updateList, {
     onSuccess: (data) => {
       setTitle(data.title);
-      toast.success(`Renamed to "${data.title}"`);
       disableEditing();
+      toast.success(`Renamed to "${data.title}"`);
     },
     onError: (error) => {
       toast.error(error);
