@@ -6,6 +6,9 @@ import { ListForm } from "./list-form";
 import { useEffect, useState } from "react";
 import { ListItem } from "./list-item";
 
+import { toast } from "sonner";
+import { useAction } from "@/hooks/use-action";
+import { updateListOrder } from "@/actions/update-list-order";
 interface ListContainerProps {
   data: List[];
   boardId: string;
@@ -20,6 +23,15 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
 }
 export const ListContainer = ({ boardId, data }: ListContainerProps) => {
   const [orderedData, setOrderedData] = useState(data);
+
+  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+      toast.success("List reordered");
+    },
+    onError: (error) => {
+      toast.error(error)
+    }
+  });
 
   useEffect(() => {
     setOrderedData(data);
@@ -47,30 +59,35 @@ export const ListContainer = ({ boardId, data }: ListContainerProps) => {
         (item, index) => ({ ...item, order: index })
       );
 
-      setOrderedData(items)
-      //TODO: Trigger Server Action
+      setOrderedData(items);
+      // Trigger Server Action
+      executeUpdateListOrder({items, boardId})
     }
 
     // user moves a card
     if (type === "card") {
-      let newOrderedData = [...orderedData]
+      let newOrderedData = [...orderedData];
 
       // Source and destination list
-      const sourceList = newOrderedData.find(list => list.id === source.droppableId)
-      const destList = newOrderedData.find(list => list.id === destination.droppableId)
+      const sourceList = newOrderedData.find(
+        (list) => list.id === source.droppableId
+      );
+      const destList = newOrderedData.find(
+        (list) => list.id === destination.droppableId
+      );
 
       if (!sourceList || !destList) {
-        return
+        return;
       }
 
       // Check if cards exists on the sourceList
 
       if (!sourceList.cards) {
-        sourceList.cards = []
+        sourceList.cards = [];
       }
       // Check if cards exists on the destList
       if (!destList.cards) {
-        destList.cards = []
+        destList.cards = [];
       }
 
       // Moving the cards in the same list
@@ -80,11 +97,11 @@ export const ListContainer = ({ boardId, data }: ListContainerProps) => {
           sourceList.cards,
           source.index,
           destination.index
-        )
+        );
 
         reorderedCards.forEach((card: any, idx) => {
-          card.order = idx
-        })
+          card.order = idx;
+        });
 
         sourceList.cards = reorderedCards;
 
@@ -100,7 +117,7 @@ export const ListContainer = ({ boardId, data }: ListContainerProps) => {
         // Add card to the destination list
         destList.cards.splice(destination.index, 0, movedCard);
 
-        sourceList.cards.forEach((card:any, idx: number) => {
+        sourceList.cards.forEach((card: any, idx: number) => {
           card.order = idx;
         });
 
@@ -110,6 +127,7 @@ export const ListContainer = ({ boardId, data }: ListContainerProps) => {
         });
 
         setOrderedData(newOrderedData);
+        // TODO: Trigger Server Action
       }
     }
   };
