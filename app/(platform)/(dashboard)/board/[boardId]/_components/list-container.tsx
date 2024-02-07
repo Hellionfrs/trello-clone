@@ -5,10 +5,11 @@ import { List } from "@prisma/client";
 import { ListForm } from "./list-form";
 import { useEffect, useState } from "react";
 import { ListItem } from "./list-item";
-
+import { Card } from "@prisma/client";
 import { toast } from "sonner";
 import { useAction } from "@/hooks/use-action";
 import { updateListOrder } from "@/actions/update-list-order";
+import { updateCardOrder } from "@/actions/update-card-order";
 interface ListContainerProps {
   data: List[];
   boardId: string;
@@ -29,8 +30,17 @@ export const ListContainer = ({ boardId, data }: ListContainerProps) => {
       toast.success("List reordered");
     },
     onError: (error) => {
-      toast.error(error)
-    }
+      toast.error(error);
+    },
+  });
+
+  const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
+    onSuccess: () => {
+      toast.success("Card reordered");
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
   });
 
   useEffect(() => {
@@ -59,9 +69,9 @@ export const ListContainer = ({ boardId, data }: ListContainerProps) => {
         (item, index) => ({ ...item, order: index })
       );
 
+      executeUpdateListOrder({ items, boardId });
       setOrderedData(items);
       // Trigger Server Action
-      executeUpdateListOrder({items, boardId})
     }
 
     // user moves a card
@@ -93,18 +103,21 @@ export const ListContainer = ({ boardId, data }: ListContainerProps) => {
       // Moving the cards in the same list
 
       if (source.droppableId === destination.droppableId) {
-        const reorderedCards = reorder(
+        const reorderedCards: Card[] = reorder(
           sourceList.cards,
           source.index,
           destination.index
         );
 
-        reorderedCards.forEach((card: any, idx) => {
+        reorderedCards.forEach((card, idx) => {
           card.order = idx;
         });
 
-        sourceList.cards = reorderedCards;
-
+        sourceList.cards= reorderedCards;
+        executeUpdateCardOrder({
+          boardId: boardId,
+          items: reorderedCards,
+        });
         setOrderedData(newOrderedData);
         // TODO: Trigger Server Action
         // user moves the card to another list
@@ -125,7 +138,10 @@ export const ListContainer = ({ boardId, data }: ListContainerProps) => {
         destList.cards.forEach((card: any, idx: number) => {
           card.order = idx;
         });
-
+        executeUpdateCardOrder({
+          boardId: boardId,
+          items: destList.cards,
+        });
         setOrderedData(newOrderedData);
         // TODO: Trigger Server Action
       }
