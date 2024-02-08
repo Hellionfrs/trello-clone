@@ -71,7 +71,8 @@ export const NavItem = ({
         <div className="flex items-center gap-x-2">
           <div className="w-7 h-7 relative">
             <Image
-              fill
+              width={28}
+              height={28}
               src={organization.imageUrl}
               alt="Organization"
               className="rounded-sm object-cover"
