@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { FormSubmit } from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
+import { set } from "lodash";
 
 interface DescriptionProps {
   data: CardWithList;
@@ -23,7 +24,9 @@ export const Description = ({ data }: DescriptionProps) => {
   const params = useParams();
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
-
+  const [cardDescription, setCardDescription] = useState(
+    "Add a more detailed description..."
+  );
   const formRef = useRef<ElementRef<"form">>(null);
   const textareaRef = useRef<ElementRef<"textarea">>(null);
 
@@ -49,6 +52,7 @@ export const Description = ({ data }: DescriptionProps) => {
 
   const { execute, fieldErrors } = useAction(updateCard, {
     onSuccess: (data) => {
+      setCardDescription(data.description);
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],
       });
@@ -63,12 +67,14 @@ export const Description = ({ data }: DescriptionProps) => {
   const onSubmit = (formData: FormData) => {
     const description = formData.get("description") as string;
     const boardId = params.boardId as string;
+    
 
     execute({
       id: data.id,
       description,
       boardId,
     });
+
   };
 
   return (
@@ -104,7 +110,7 @@ export const Description = ({ data }: DescriptionProps) => {
             role="button"
             className="min-h-[78px] bg-neutral-200 text-sm font-medium py-3 px-3.5 rounded-md"
           >
-            {data.description || "Add a more detailed description..."}
+            {cardDescription}
           </div>
         )}
       </div>
