@@ -19,11 +19,16 @@ interface HeaderProps {
 export const Header = ({ data }: HeaderProps) => {
   const queryClient = useQueryClient();
   const params = useParams();
-
+  const [title, setTitle] = useState(data.title);
+  
   const { execute } = useAction(updateCard, {
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["card-logs", data.id],
       });
 
       toast.success(`Renamed to "${data.title}"`);
@@ -36,7 +41,7 @@ export const Header = ({ data }: HeaderProps) => {
 
   const inputRef = useRef<ElementRef<"input">>(null);
 
-  const [title, setTitle] = useState(data.title);
+  
 
   const onBlur = () => {
     inputRef.current?.form?.requestSubmit();
