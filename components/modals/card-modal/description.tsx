@@ -52,7 +52,8 @@ export const Description = ({ data }: DescriptionProps) => {
 
   const { execute, fieldErrors } = useAction(updateCard, {
     onSuccess: (data) => {
-      setCardDescription(data.description);
+      let newDescription = data.description as string
+      setCardDescription(newDescription);
       queryClient.invalidateQueries({
         queryKey: ["card", data.id],
       });
@@ -71,14 +72,12 @@ export const Description = ({ data }: DescriptionProps) => {
   const onSubmit = (formData: FormData) => {
     const description = formData.get("description") as string;
     const boardId = params.boardId as string;
-    
 
     execute({
       id: data.id,
       description,
       boardId,
     });
-
   };
 
   return (
