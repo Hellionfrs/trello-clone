@@ -78,5 +78,5 @@ npm run dev
 ```
 
 ## Deployment
-The application is deployed and accessible at: [Trello Clone](trello-clone-eight-black.vercel.app)
+The application is deployed and accessible at: [Trello Clone](https://trello-clone-eight-black.vercel.app)
 
