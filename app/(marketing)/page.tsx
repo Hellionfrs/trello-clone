@@ -1,25 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Medal } from "lucide-react";
 import Link from "next/link";
-import { Poppins } from "next/font/google";
-import local from "next/font/local";
 import { cn } from "@/lib/utils";
 
-const headingFont = local({
-  src: "../../public/fonts/font.woff2",
-});
+const headingFont = "__className_8b3a75";
+const textFont = "__className_dd2ae8";
 
-const textFont = Poppins({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
 const MarketingPage = () => {
   return (
     <div className="flex items-center justify-center flex-col">
       <div
         className={cn(
           "flex items-center justify-center flex-col",
-          headingFont.className
+          headingFont
         )}
       >
         <div className="mb-4 flex items-center border shadow-sm p-4 bg-amber-100 text-amber-700 rounded-full uppercase">
@@ -36,7 +29,7 @@ const MarketingPage = () => {
       <div
         className={cn(
           "text-sm md:text-xl text-neutral-400 mt-4 max-w-xs md:max-w-2xl text-center mx-auto",
-          textFont.className
+          textFont
         )}
       >
         Collaborate, manage projects, and reach new productivity peaks. From

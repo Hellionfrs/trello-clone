@@ -1,11 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 
-const headingFont = localFont({
-  src: "../public/fonts/font.woff2",
-});
 export const Logo = () => {
   return (
     <Link href="/">
@@ -18,7 +14,7 @@ export const Logo = () => {
           style={{ width: "30px", height: "auto" }}
         />
         <p
-          className={cn("text-lg text-neutral-700 pt-1", headingFont.className)}
+          className={cn("text-lg text-neutral-700 pt-1", "__className_8b3a75")}
         >
           Taskify
         </p>
