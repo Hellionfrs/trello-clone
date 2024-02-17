@@ -1,4 +1,4 @@
-# FullStack [Trello Clone]([https://trello-clone-eight-black.vercel.app](https://trello-clone-git-vitest-next-hellionfrs-projects.vercel.app))
+# FullStack [Trello Clone](trello-clone-git-vitest-next-hellionfrs-projects.vercel.app)
 This repository contains the Fullstack Trello Clone, built with Next.js 14, Server Actions, React, Prisma, Stripe, Tailwind, and Postgresql (Supabase).
 ## Summary
 FullStack Trello Clone is an application that provides functionality similar to Trello. It allows users to manage their tasks and projects by creating boards, lists, and cards. With features such as authentication, organizations, activity logging, integration with Unsplash API for random cover images, and more, this application offers a comprehensive project management experience.
@@ -78,5 +78,5 @@ npm run dev
 ```
 
 ## Deployment
-The application is deployed and accessible at: [Trello Clone]([https://trello-clone-eight-black.vercel.app](https://trello-clone-git-vitest-next-hellionfrs-projects.vercel.app)https://trello-clone-git-vitest-next-hellionfrs-projects.vercel.app)
+The application is deployed and accessible at: [Trello Clone](trello-clone-git-vitest-next-hellionfrs-projects.vercel.app)
 
