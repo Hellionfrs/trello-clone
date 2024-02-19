@@ -20,10 +20,12 @@ export const CardModal = () => {
   const { data: cardData } = useQuery<CardWithList>({
     queryKey: ["card", id],
     queryFn: () => fetcher(`/api/cards/${id}`),
+    enabled: !!id,
   });
   const { data: auditLogsData } = useQuery<AuditLog[]>({
     queryKey: ["card-logs", id],
     queryFn: () => fetcher(`/api/cards/${id}/logs`),
+    enabled: !!id,
   });
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
